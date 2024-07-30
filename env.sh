@@ -12,4 +12,4 @@ export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$CUDA_HOME/extras/CUPTI/lib64:$LD_LIBRAR
 
 # conda
 source ~/anaconda3/etc/profile.d/conda.sh
-conda activate jax-compile
+conda activate wangjh-jax-compile

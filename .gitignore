@@ -1,4 +1,5 @@
 /third_party/*
 !third_party/INSTALL.md
+!third_party/build_gcc.sh
 
 logs/
