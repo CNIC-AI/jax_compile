@@ -1,0 +1,4 @@
+/third_party/*
+!third_party/INSTALL.md
+
+logs/
