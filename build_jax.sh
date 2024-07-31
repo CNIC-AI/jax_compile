@@ -3,13 +3,13 @@ clear
 source config.sh
 source env.sh
 
-gcc -v
-nvcc -V
+pip install dm-haiku
+pip install orbax-checkpoint==0.5.16 --no-deps
 
 #
 cd $WORKSPACE/third_party/jax
 mkdir -p dist && rm -rf dist/*
-bazel clean --expunge
+# bazel clean --expunge
 python build/build.py \
     --enable_cuda \
     --cuda_path=$CUDA_HOME \

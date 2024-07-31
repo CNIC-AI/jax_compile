@@ -1,6 +1,7 @@
 #!/bin/bash
-#SBATCH -p normal
+#SBATCH -p Nvidia_A800
 #SBATCH -N 2
+#SBATCH --gres=gpu:1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
 #SBATCH --time=10:00
