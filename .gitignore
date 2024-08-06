@@ -1,5 +1,17 @@
-/third_party/*
-!third_party/INSTALL.md
-!third_party/build_gcc.sh
+# source code
+jax/
+xla/
 
+# slurm
 logs/
+
+# environment
+install/
+*.log
+
+# third-party packages, cuda installer, etc.
+*.tar.*
+bazel-*
+cuda_*
+cudnn-*
+gcc-*

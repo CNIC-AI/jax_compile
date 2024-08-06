@@ -1,22 +1,42 @@
-#/bin/bash
+#!/bin/bash
 clear
-source config.sh
 source env.sh
+WORKSPACE=$(dirname $(readlink -f "${BASH_SOURCE[0]}"))
+for arg in "$@"; do
+    if [ "$arg" == "clean" ]; then
+        cd $WORKSPACE/jax
+        bazel clean --expunge
+    fi
+done
 
-pip install dm-haiku
-pip install orbax-checkpoint==0.5.16 --no-deps
+# env
+source ~/anaconda3/etc/profile.d/conda.sh
+conda activate jax_compile
+# pip install --upgrade pip
+# pip install build
+# pip install numpy==1.26
+# pip install setuptools==65.7.0
+numpy_version=$(python -c "import numpy as np; print(np.__version__)")
 
-#
-cd $WORKSPACE/third_party/jax
+# build
+cd $WORKSPACE/jax
 mkdir -p dist && rm -rf dist/*
-# bazel clean --expunge
-python build/build.py \
+python -u build/build.py \
     --enable_cuda \
     --cuda_path=$CUDA_HOME \
     --cudnn_path=$CUDNN_HOME \
-    --bazel_options=--override_repository=xla="$WORKSPACE/third_party/xla"
+    --bazel_options=--override_repository=xla="$WORKSPACE/xla"
 
-#
-pip install dist/*.whl --force-reinstall
-pip install -e .
-pip install numpy==1.26
+(
+    exec >"$WORKSPACE/$(date '+%Y%m%d_%H%M%S').log" 2>&1
+
+    python setup.py bdist_wheel
+
+    # install
+    pip install dist/jaxlib-*.whl --force-reinstall
+    pip install dist/jax-*.whl --force-reinstall
+    # pip install -e .
+    pip install numpy==$numpy_version
+
+    pip list
+)
