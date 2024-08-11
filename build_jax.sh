@@ -33,7 +33,7 @@ python -u build/build.py \
     --bazel_options=--override_repository=xla="$WORKSPACE/xla"
 
 (
-    exec >"$WORKSPACE/$(date '+%Y%m%d_%H%M%S').log" 2>&1
+    exec >"$WORKSPACE/logs/$(date '+%Y%m%d_%H%M%S').log" 2>&1
     python setup.py bdist_wheel
 
     pip install dist/jaxlib-*.whl --force-reinstall
